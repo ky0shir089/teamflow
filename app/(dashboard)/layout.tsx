@@ -18,7 +18,7 @@ const WorkspaceLayout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
 
-      {children}
+      <main className="flex-1 overflow-auto">{children}</main>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-const worskspaces = [
+const workspaces = [
   { id: 1, name: "Team Flow 1", avatar: "TF 1" },
   { id: 2, name: "Team Flow 2", avatar: "TF 2" },
   { id: 3, name: "Team Flow 3", avatar: "TF 3" },
@@ -38,7 +38,7 @@ const WorkspaceList = () => {
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-2">
-        {worskspaces.map((ws) => (
+        {workspaces.map((ws) => (
           <Tooltip key={ws.id}>
             <TooltipTrigger asChild>
               <Button
