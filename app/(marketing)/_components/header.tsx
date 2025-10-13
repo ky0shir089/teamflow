@@ -1,10 +1,17 @@
 "use client";
+
 import Link from "next/link";
 import { Logo } from "@/app/(marketing)/_components/logo";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import React from "react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import {
+  RegisterLink,
+  LoginLink,
+  LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const menuItems = [
   { name: "Features", href: "#link" },
@@ -14,8 +21,11 @@ const menuItems = [
 ];
 
 export const HeroHeader = () => {
-  const [menuState, setMenuState] = React.useState(false);
-  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [menuState, setMenuState] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { getUser, isLoading, isAuthenticated } = useKindeBrowserClient();
+
+  const user = getUser();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -88,38 +98,62 @@ export const HeroHeader = () => {
                 </ul>
               </div>
 
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className={cn(isScrolled && "lg:hidden")}
-                >
-                  <Link href="#">
-                    <span>Login</span>
-                  </Link>
-                </Button>
+              {isLoading ? null : (
+                <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                  {user ? (
+                    <>
+                      <Link
+                        href="/workspaces"
+                        className={buttonVariants({ size: "sm" })}
+                      >
+                        <span>Dashboard</span>
+                      </Link>
 
-                <Button
-                  asChild
-                  size="sm"
-                  className={cn(isScrolled && "lg:hidden")}
-                >
-                  <Link href="#">
-                    <span>Sign Up</span>
-                  </Link>
-                </Button>
+                      <LogoutLink
+                        className={buttonVariants({
+                          variant: "outline",
+                          size: "sm",
+                        })}
+                      >
+                        <span>Logout</span>
+                      </LogoutLink>
+                    </>
+                  ) : (
+                    <>
+                      <LoginLink
+                        className={buttonVariants({
+                          variant: "outline",
+                          size: "sm",
+                          className: cn(isScrolled && "lg:hidden"),
+                        })}
+                      >
+                        Sign in
+                      </LoginLink>
 
-                <Button
-                  asChild
-                  size="sm"
-                  className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-                >
-                  <Link href="#">
-                    <span>Get Started</span>
-                  </Link>
-                </Button>
-              </div>
+                      <RegisterLink
+                        className={buttonVariants({
+                          size: "sm",
+                          className: cn(isScrolled && "lg:hidden"),
+                        })}
+                      >
+                        Sign up
+                      </RegisterLink>
+
+                      <div
+                        className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
+                      >
+                        <RegisterLink
+                          className={buttonVariants({
+                            size: "sm",
+                          })}
+                        >
+                          Get Started
+                        </RegisterLink>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
