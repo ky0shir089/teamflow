@@ -2,16 +2,36 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns:[
+    remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'ik.imagekit.io',
+        protocol: "https",
+        hostname: "ik.imagekit.io",
       },
       {
-        protocol: 'https',
-        hostname: 'html.tailus.io',
-      }
-    ]
+        protocol: "https",
+        hostname: "html.tailus.io",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatar.vercel.sh",
+      },
+    ],
   },
 };
 
