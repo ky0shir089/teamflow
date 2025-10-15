@@ -45,7 +45,7 @@ export const listChannels = base
   .route({
     method: "GET",
     path: "/channels",
-    summary: "List all channel",
+    summary: "List all channels",
     tags: ["channels"],
   })
   .input(z.void())
