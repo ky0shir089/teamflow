@@ -15,13 +15,29 @@ datasource db {
 }
 
 model Channel {
-  id        String    @id @default(uuid())
-  name      String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  id          String    @id @default(uuid())
+  name        String
+  workspaceId String    @map("workspace_id")
+  createdById String    @map("created_by_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
 
-  workspaceId String @map("workspace_id")
-  createdById String @map("created_by_id")
+  message Message[]
 
   @@unique([workspaceId, name])
+}
+
+model Message {
+  id           String    @id @default(uuid())
+  content      String
+  imageUrl     String?   @map("image_url")
+  authorId     String    @map("author_id")
+  authorName   String    @map("author_name")
+  authorEmail  String    @map("author_email")
+  authorAvatar String    @map("author_avatar")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+
+  Channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String  @map("channel_id")
 }
