@@ -36,6 +36,7 @@ const MessageInputForm = ({ channelId }: iAppProps) => {
   const createMessageMutation = useMutation(
     orpc.message.create.mutationOptions({
       onSuccess: () => {
+        form.reset();
         queryClient.invalidateQueries({
           queryKey: orpc.message.list.key(),
         });
